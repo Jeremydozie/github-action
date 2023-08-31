@@ -88,7 +88,7 @@ name: Build and Push Docker Image to ECR
 
 on:
   push:
-    branches:
+    branches-ignore:
       - main  # Adjust this to your main branch name
 
 env:  # Define environment variables for the job
@@ -131,6 +131,7 @@ jobs:
 #        
     - name: Test Python file vulnerabilities with Snyk
       run: |
+        pip install -r requirements.txt
         snyk test --file=requirements.txt --package-manager=pip
         snyk test --all-projects --project-type=pip
 
