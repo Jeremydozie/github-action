@@ -114,6 +114,10 @@ jobs:
     - name: Install Snyk CLI
       run: |
         npm install -g snyk
+
+    - name: Authenticate Snyk CLI
+      run: |
+        snyk auth ${{ secrets.SNYK_API_TOKEN }}
   
     - name: Test Docker image vulnerabilities with Snyk
       run: |
@@ -130,3 +134,5 @@ jobs:
     - name: Push Docker image to ECR
       run: |
         docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+
+        
