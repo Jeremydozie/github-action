@@ -131,6 +131,7 @@ jobs:
 #        
     - name: Test Python file vulnerabilities with Snyk
       run: |
+        synk test --file=requirements.txt --package-manager=pip
         snyk test --all-projects --project-type=pip
 
 
