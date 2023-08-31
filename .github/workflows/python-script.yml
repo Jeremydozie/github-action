@@ -131,7 +131,8 @@ jobs:
 #        
     - name: Test Python file vulnerabilities with Snyk
       run: |
-        snyk test app/app.py
+        snyk test --file=app/app.py
+
 
 
     - name: Log in to Amazon ECR
