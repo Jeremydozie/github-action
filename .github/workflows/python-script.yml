@@ -27,6 +27,63 @@
 #      run: python app.py
 
 
+
+
+
+# Build, scan using trivy and push to ECR
+
+#name: Build and Push Docker Image to ECR
+#
+#on:
+#  push:
+#    branches:
+#      - main  # Adjust this to your main branch name
+#
+#jobs:
+#  build-scan-and-push:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+#
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v1
+#      with:
+#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#        aws-region: us-east-1  # Adjust this to your desired AWS region
+#
+#    - name: Build Docker image
+#      run: |
+#        docker build -t jaydox:latest .
+#        docker tag jaydox:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+#
+#    - name: Install Trivy
+#      run: |
+#        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+#
+#  
+#    - name: Test Docker image vulnerabilities with Trivy
+#      run: |
+#        trivy image ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest         
+#
+#    - name: Log in to Amazon ECR
+#      run: |
+#        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+#
+#    - name: Push Docker image to ECR
+#      run: |
+#        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+#
+
+
+
+
+
+# Build, scan using synk and push to ECR
+
+
 name: Build and Push Docker Image to ECR
 
 on:
@@ -54,14 +111,17 @@ jobs:
         docker build -t jaydox:latest .
         docker tag jaydox:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
 
-    - name: Install Trivy
+    - name: Install Snyk CLI
       run: |
-        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-
+        npm install -g snyk
   
-    - name: Test Docker image vulnerabilities with Trivy
+    - name: Test Docker image vulnerabilities with Snyk
       run: |
-        trivy image ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest         
+        snyk test --all-projects --all-sub-projects --docker ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+        
+    - name: Test Python file vulnerabilities with Snyk
+      run: |
+        snyk test app/app.py
 
     - name: Log in to Amazon ECR
       run: |
