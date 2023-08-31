@@ -24,4 +24,4 @@ jobs:
         pip install -r requirements.txt  # If you have a requirements file
 
     - name: Run Python script
-      run: python path/to/your/script.py
+      run: app.py
