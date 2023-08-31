@@ -94,7 +94,6 @@ on:
 env:  # Define environment variables for the job
   AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  SNYK_API_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
 
 
 jobs:
@@ -126,6 +125,8 @@ jobs:
     - name: Authenticate Snyk CLI
       run: |
         snyk auth
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
 #  
 #    - name: Test Docker image vulnerabilities with Snyk
 #      run: |
