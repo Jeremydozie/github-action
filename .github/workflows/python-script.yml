@@ -154,9 +154,10 @@
 #
 name: Example workflow for Python using Snyk
 on: 
-   push
-      branches-ignore:
-     - main
+    push:
+        branches-ignore:
+            - main
+
 jobs:
   security:
     runs-on: ubuntu-latest
