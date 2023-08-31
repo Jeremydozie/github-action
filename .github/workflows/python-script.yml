@@ -117,7 +117,7 @@ jobs:
   
     - name: Test Docker image vulnerabilities with Snyk
       run: |
-        snyk test --all-projects --all-sub-projects --docker ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+        snyk test --all-projects --docker ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
         
     - name: Test Python file vulnerabilities with Snyk
       run: |
