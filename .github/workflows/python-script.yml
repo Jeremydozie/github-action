@@ -98,60 +98,60 @@
 #  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 #
 #
-jobs:
-  build-scan-and-push:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-# Another way of adding env variable; but soon to be deprecated 
-
-#    - name: Configure AWS credentials
-#      uses: aws-actions/configure-aws-credentials@v1
-#      with:
-#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#        aws-region: us-east-1  # Adjust this to your desired AWS region
-
-    - name: Build Docker image
-      run: |
-        docker build -t jaydox:latest .
-        docker tag jaydox:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
-
-    - name: Install Snyk CLI
-      run: |
-        npm install -g snyk
-
-    - name: Authenticate Snyk CLI
-      run: |
-        snyk auth $SNYK_TOKEN
-#  
-#    - name: Test Docker image vulnerabilities with Snyk
+#jobs:
+#  build-scan-and-push:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+#
+## Another way of adding env variable; but soon to be deprecated 
+#
+##    - name: Configure AWS credentials
+##      uses: aws-actions/configure-aws-credentials@v1
+##      with:
+##        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+##        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+##        aws-region: us-east-1  # Adjust this to your desired AWS region
+#
+#    - name: Build Docker image
 #      run: |
-#        snyk test --docker ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+#        docker build -t jaydox:latest .
+#        docker tag jaydox:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+#
+#    - name: Install Snyk CLI
+#      run: |
+#        npm install -g snyk
+#
+#    - name: Authenticate Snyk CLI
+#      run: |
+#        snyk auth $SNYK_TOKEN
+##  
+##    - name: Test Docker image vulnerabilities with Snyk
+##      run: |
+##        snyk test --docker ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+##        
+#    - name: Test Python file vulnerabilities with Snyk
+#      run: |
+#        pip install -r requirements.txt
+#        synk test --file=app/app.py --project-type=pip
+##        snyk test --all-projects --project-type=pip
+#        snyk monitor --all-projects --project-type=pip
+#
+#
+#
+#    - name: Log in to Amazon ECR
+#      run: |
+#        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+#
+#
+#    - name: Push Docker image to ECR
+#      run: |
+#        docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
 #        
-    - name: Test Python file vulnerabilities with Snyk
-      run: |
-        pip install -r requirements.txt
-        synk test --file=app/app.py --project-type=pip
-#        snyk test --all-projects --project-type=pip
-        snyk monitor --all-projects --project-type=pip
-
-
-
-    - name: Log in to Amazon ECR
-      run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
-
-
-    - name: Push Docker image to ECR
-      run: |
-        docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
-        
-        
-
+#        
+#
 
 name: Example workflow for Python-3.7 using Snyk
 on:
