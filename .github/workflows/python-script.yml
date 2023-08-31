@@ -1,4 +1,33 @@
-name: Run Python Script
+#name: Run Python Script
+#
+#on:
+#  push:
+#    branches:
+#      - main  # Adjust this to your main branch name
+#
+#jobs:
+#  run-python-script:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+#
+#    - name: Set up Python
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: 3.8  # Adjust to your desired Python version
+#
+#    - name: Install dependencies
+#      run: |
+#        python -m pip install --upgrade pip
+#        pip install -r requirements.txt # If you have a requirements file
+#
+#    - name: Run Python script
+#      run: python app.py
+
+
+name: Build and Push Docker Image to ECR
 
 on:
   push:
@@ -6,22 +35,29 @@ on:
       - main  # Adjust this to your main branch name
 
 jobs:
-  run-python-script:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        python-version: 3.8  # Adjust to your desired Python version
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # Adjust this to your desired AWS region
 
-    - name: Install dependencies
+    - name: Build Docker image
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt # If you have a requirements file
+        docker build -t jaydox:latest .
+        docker tag jaydox:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
 
-    - name: Run Python script
-      run: python app.py
+    - name: Log in to Amazon ECR
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+
+    - name: Push Docker image to ECR
+      run: |
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
