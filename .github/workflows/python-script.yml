@@ -30,7 +30,7 @@
 
 
 
-# Build, scan using trivy and push to ECR
+# Build, scan using trivy and push to ECR and also add env variables using the old way/soon to be deprecated way
 
 #name: Build and Push Docker Image to ECR
 #
@@ -91,7 +91,7 @@ on:
     branches-ignore:
       - main  # Adjust this to your main branch name
 
-env:  # Define environment variables for the job
+env:  # Define environment variables for the job (remember to add the secrets to your repository's secrets before adding them here)
   AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -136,7 +136,8 @@ jobs:
       run: |
         pip install -r requirements.txt
         snyk test --all-projects --project-type=pip
-#        snyk test --all-projects --project-type=pip --severity-threshold=high
+        snyk monitor --all-projects --project-type=pip
+
 
 
     - name: Log in to Amazon ECR
