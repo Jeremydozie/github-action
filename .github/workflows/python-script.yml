@@ -131,7 +131,8 @@ jobs:
 #        
     - name: Test Python file vulnerabilities with Snyk
       run: |
-        snyk test --file=app/app.py --all-sub-projects
+        snyk test --file=app/app.py --package-manager=pip --project-name=app.py
+        
 
 
 
