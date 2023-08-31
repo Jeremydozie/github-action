@@ -136,7 +136,6 @@ jobs:
       run: |
         pip install -r requirements.txt
 #        snyk test --all-projects --project-type=pip
-        snyk test --all-projects --project-type=pip --file=requirements.txt
         snyk monitor --all-projects --project-type=pip
 
 
