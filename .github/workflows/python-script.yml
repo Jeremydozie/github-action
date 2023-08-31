@@ -132,7 +132,7 @@ jobs:
     - name: Test Python file vulnerabilities with Snyk
       run: |
         pip install -r requirements.txt
-        snyk test --file=app/app.py --package-manager=pip
+        snyk test --file=app.py --package-manager=pip
 #        snyk test --file=requirements.txt --package-manager=pip
 #        snyk test --all-projects --project-type=pip
 
