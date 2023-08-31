@@ -125,7 +125,7 @@ jobs:
 
     - name: Authenticate Snyk CLI
       run: |
-        snyk auth
+        snyk auth $SNYK_TOKEN
 #  
 #    - name: Test Docker image vulnerabilities with Snyk
 #      run: |
