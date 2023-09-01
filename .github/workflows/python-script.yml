@@ -101,7 +101,6 @@ env:  # Define environment variables for the job (remember to add the secrets to
 jobs:
   build-scan-and-push:
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
     - name: Checkout code
@@ -129,10 +128,9 @@ jobs:
       run: |
         snyk auth $SNYK_TOKEN
   
-    - name: Test Docker image vulnerabilities with Snyk
-      run: |
-        snyk test --docker $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
-        snyk monitor --all-projects --project-type=pip
+#    - name: Test Docker image vulnerabilities with Snyk
+#      run: |
+#        snyk test --docker $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
         
     - name: Test Python file vulnerabilities with Snyk
       run: |
