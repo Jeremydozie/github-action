@@ -165,7 +165,6 @@ jobs:
     steps:
    
      - name: Run Snyk to check for vulnerabilities
-     - uses: actions/checkout@master
        uses: snyk/actions/python-3.7@master
        env:
          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -177,9 +176,3 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
-
-      - name: Run Snyk to check for vulnerabilities
-      - uses: actions/checkout@master
-        uses: snyk/actions/python-3.7@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
