@@ -135,8 +135,7 @@
 #    - name: Test Python file vulnerabilities with Snyk
 #      run: |
 #        pip install -r requirements.txt
-#        synk test --file=app/app.py --project-type=pip
-##        snyk test --all-projects --project-type=pip
+#        snyk test --all-projects --project-type=pip
 #        snyk monitor --all-projects --project-type=pip
 #
 #
@@ -176,7 +175,7 @@
 #          sarif_file: snyk.sarif
 
 
-name: Example workflow using Snyk
+name: Example workflow for Docker using Snyk 
 on: 
     push:
         branches-ignore:
@@ -185,10 +184,9 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.7@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
