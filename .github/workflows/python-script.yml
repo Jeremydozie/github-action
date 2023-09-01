@@ -181,9 +181,6 @@ on:
     push:
         branches-ignore:
         - main
-env: 
-    AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   security:
@@ -193,5 +190,7 @@ jobs:
       uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        AWS ACCESS KEY ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS SECRET ACCESS KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       with:
         image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
