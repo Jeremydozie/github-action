@@ -210,7 +210,7 @@ jobs:
         - name: Test with pytest
           run: |
             pip install pytest pytest-cov
-            pytest app.py 
+            pytest test.py 
             
 
 
