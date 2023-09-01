@@ -175,12 +175,8 @@ jobs:
      - name: Run Snyk to check for vulnerabilities
        uses: snyk/actions/python-3.7@master
  
-     - name: Log in to Amazon ECR
-       run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 210624171893.dkr.ecr.us-east-1.amazonaws.com
-
  
      - name: Run Snyk to check Docker image for vulnerabilities
        uses: snyk/actions/docker@master
        with:
-         image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox:latest
+         image: hello-world:latest
