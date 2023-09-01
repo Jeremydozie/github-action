@@ -180,3 +180,4 @@ jobs:
        uses: snyk/actions/docker@master
        with:
          image: hello-world:latest
+         command: monitor
