@@ -191,7 +191,4 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-      env:
-        AWS ACCESS KEY ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS SECRET ACCESS KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
