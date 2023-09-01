@@ -170,9 +170,9 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-    - name: Run Snyk to check Docker image for vulnerabilities
-      uses: snyk/actions/docker@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
+     - name: Run Snyk to check Docker image for vulnerabilities
+       uses: snyk/actions/docker@master
+       env:
+         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+       with:
+         image: 210624171893.dkr.ecr.us-east-1.amazonaws.com/jaydox
