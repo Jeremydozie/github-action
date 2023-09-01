@@ -207,6 +207,8 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
             python -m pip install --upgrade pip setuptools wheel
+            pip install calculator
+
         - name: Test with pytest
           run: |
             pip install pytest pytest-cov
