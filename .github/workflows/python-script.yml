@@ -174,10 +174,13 @@ jobs:
      - uses: actions/checkout@master
      - name: Run Snyk to check for vulnerabilities
        uses: snyk/actions/python-3.7@master
+       with:
+         command: monitor # monitor provides a link to the snyk dashboard so you can see the results of the scan
+
  
  
      - name: Run Snyk to check Docker image for vulnerabilities
        uses: snyk/actions/docker@master
        with:
-         image: hello-world:latest
-         command: monitor
+         image: hello-world:latest # having issues pulling image from aws ECR so I used hello-world image
+         command: monitor # monitor provides a link to the snyk dashboard so you can see the results of the scan
