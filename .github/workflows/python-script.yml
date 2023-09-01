@@ -101,7 +101,7 @@ env:  # Define environment variables for the job (remember to add the secrets to
 jobs:
   build-scan-and-push:
     runs-on: ubuntu-latest
-    continue-on-error: true
+#    continue-on-error: true
 
     steps:
     - name: Checkout code
