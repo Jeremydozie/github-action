@@ -213,7 +213,7 @@ jobs:
         - name: Test with pytest
           run: |
             pip install pytest pytest-cov
-            pytest test.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+            pytest test.py #--doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 #Note; remember to add the test.py file you want to test to your directory, example is shown below
 
 ## test_example.py
