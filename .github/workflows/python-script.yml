@@ -185,6 +185,8 @@
 #         command: monitor # monitor provides a link to the snyk dashboard so you can see the results of the scan
 
 
+# Github action to test python code using pytest
+
 name: Python package
 
 on:
@@ -207,12 +209,22 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
             python -m pip install --upgrade pip setuptools wheel
-            pip install calculator
 
         - name: Test with pytest
           run: |
             pip install pytest pytest-cov
             pytest test.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-            
+#Note; remember to add the test.py file you want to test to your directory, example is shown below
+
+## test_example.py
+#
+#def add(x, y):
+#    return x + y
+#
+#def test_addition():
+#    assert add(1, 2) == 3
+#
+#def test_subtraction():
+#    assert add(5, 3) == 8          
 
 
